@@ -1,0 +1,25 @@
+describe('Test Suite', () => {
+  
+  beforeEach(() => 
+  {
+    cy.visit('https://automationpanda.com/2021/12/29/want-to-practice-test-automation-try-these-demo-sites/');
+  });
+
+  it('Verify the title', function() 
+  {
+    cy.title().should('eq', 'Want to practice test automation? Try these demo sites! | Automation Panda');
+  });
+
+  it('Click on Speaking and Verify the title', function() 
+  {
+    cy.contains('Speaking').click();
+    cy.title().should('eq', 'Speaking | Automation Panda');
+  });
+
+  it('Verify Keynote Addresses is present and has expected text', function() 
+  {
+    cy.contains('Speaking').click();
+    cy.contains('Keynote Addresses').should('be.visible');
+    cy.contains('Keynote Addresses').should('have.text', 'Keynote Addresses');
+  });
+});

@@ -1,0 +1,13 @@
+Feature: Flight search on MakeMyTrip
+
+Scenario: Search for Round Trip Flights
+
+Given User is on the MakeMyTrip Website
+When User click on Flights
+And User select round trip
+Then User enter From location as HYD
+And User enter To location as MAA
+Then User select Departure date
+And User select Return date
+And click on search
+Then User should verify the search page displayed as expected

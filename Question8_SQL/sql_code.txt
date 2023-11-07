@@ -1,0 +1,39 @@
+create table EMP_Data
+(
+    EMP_No number(5),
+    EMP_Name varchar(20),
+    EMP_Exp number(10),
+    EMP_Department varchar2(20),
+    EMP_Salary number(10,2)
+);
+
+
+
+insert into EMP_Data (EMP_No,EMP_Name,EMP_Exp,EMP_Department,EMP_Salary) values (101,'Kaira',4,'Sales',70000);
+
+insert into EMP_Data(EMP_No,EMP_Name,EMP_Exp,EMP_Department,EMP_Salary) values (102,'Tom',3,'IT',36000);
+
+insert into EMP_Data(EMP_No,EMP_Name,EMP_Exp,EMP_Department,EMP_Salary) values (103,'Ram',9,'Cyber Security',100000);
+
+insert into EMP_Data(EMP_No,EMP_Name,EMP_Exp,EMP_Department,EMP_Salary) values (104,'Jacques',12,'Marketing',150000);
+
+insert into EMP_Data(EMP_No,EMP_Name,EMP_Exp,EMP_Department,EMP_Salary) values (105,'Richie',8,'Operation',90000);
+
+insert into EMP_Data(EMP_No,EMP_Name,EMP_Exp,EMP_Department,EMP_Salary) values (106,'Richard',3,'Finance',40000);
+
+insert into EMP_Data(EMP_No,EMP_Name,EMP_Exp,EMP_Department,EMP_Salary) values (107,'Aarthi',5,'IT',70000);
+
+insert into EMP_Data(EMP_No,EMP_Name,EMP_Exp,EMP_Department,EMP_Salary) values (108,'Jack',3,'Finance',36000);
+
+
+
+
+select * from EMP_Data;
+
+
+
+select * from EMP_Data where EMP_Department='IT';
+
+
+
+select * from EMP_Data where EMP_Department='Finance';

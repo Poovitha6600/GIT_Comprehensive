@@ -1,0 +1,64 @@
+import time
+import pytest
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.action_chains import ActionChains
+
+driver = webdriver.Chrome()
+driver.implicitly_wait(10)
+browser = "https://www.makemytrip.com/"
+driver.get(browser)
+driver.maximize_window()
+actions = ActionChains(driver)
+actions.move_by_offset(50, 50).click().perform()
+# click on flights
+flights = driver.find_element(By.XPATH, "//*[@id=\"SW\"]/div[1]/div[2]/div/div/nav/ul/li[1]/span/a/span[2]")
+flights.click()
+
+# Select ROUND TRIP
+roundtrip = driver.find_element(By.XPATH, '//*[@id="root"]/div/div[2]/div/div/div/div[1]/ul/li[2]')
+roundtrip.click()
+
+# Enter FROM locations
+driver.find_element(By.XPATH, '//input[@id="fromCity"]').click()
+fromlocation = driver.find_element(By.XPATH, '//input[@placeholder="From"]')
+fromlocation.click()
+fromlocation.send_keys('HYD')
+time.sleep(5)
+from_city = driver.find_element(By.XPATH, '//li[@id="react-autowhatever-1-section-0-item-0"]')
+from_city.click()
+time.sleep(3)
+
+# Enter TO Location
+driver.find_element(By.XPATH, '//input[@id="toCity"]').click()
+tolocation = driver.find_element(By.XPATH, '//input[@placeholder="To"]')
+tolocation.click()
+tolocation.send_keys('MAA')
+time.sleep(5)
+to_city = driver.find_element(By.XPATH, '//li[@id="react-autowhatever-1-section-0-item-0"]')
+to_city.click()
+time.sleep(3)
+
+# Select departure date
+departureDate = driver.find_element(By.XPATH, '//div[@class="DayPicker-Day DayPicker-Day--start DayPicker-Day--selected"]')
+departureDate.click()
+time.sleep(5)
+
+# Select return date
+returnDate = driver.find_element(By.XPATH, '//*[@id="root"]/div/div[2]/div/div/div/div[2]/div[1]/div[3]/div[1]/div/div/div/div[2]/div/div[2]/div[2]/div[3]/div[1]/div[5]')
+returnDate.click()
+time.sleep(10)
+
+# Click on Search Button
+search_button = driver.find_element(By.XPATH, '//*[@id="root"]/div/div[2]/div/div/div/div[2]/p/a')
+search_button.click()
+
+
+wait = WebDriverWait(driver, 10)
+popup = wait.until(EC.presence_of_element_located((By.XPATH, '//button[@class="button buttonSecondry buttonBig fontSize12 relative"]')))
+popup.click()
+
+assert "MakeMyTrip" in driver.title

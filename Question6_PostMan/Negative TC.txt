@@ -1,0 +1,22 @@
+-->API:
+
+https://reqres.in/api/login
+
+
+-->Body:
+
+{
+"email": "peter@klaven"
+}
+
+
+-->Tests:
+
+pm.test("Status code is 400", function () {
+pm.response.to.have.status(400);
+});
+
+pm.test("Response contains error", function()
+{
+pm.response.to.have.jsonBody("error");
+});

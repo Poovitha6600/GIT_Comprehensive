@@ -1,0 +1,116 @@
+package sdet;
+
+import java.time.Duration;
+
+import [org.openqa.selenium.By](http://org.openqa.selenium.by/);
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+
+import org.openqa.selenium.interactions.Actions;
+
+public class Ques2_SeleniumJava {
+
+
+public static void main(String[] args) throws InterruptedException {
+    // TODO Auto-generated method stub
+
+    System.setProperty("webdriver.chrome.driver", "C:\\\\Intel\\\\Driver\\\\chromedriver-win64\\\\chromedriver-win64\\\\chromedriver.exe");
+
+    ChromeOptions co = new ChromeOptions();
+
+    co.setBinary("C:\\\\Intel\\\\Driver\\\\chrome-win64\\\\chrome-win64\\\\chrome.exe");
+
+    WebDriver driver = new ChromeDriver(co);
+
+    driver.manage().window().maximize();
+
+    driver.get("<https://www.makemytrip.com/>");
+
+    Actions action=new Actions(driver);
+
+    action.moveByOffset(50,50).click().build().perform();
+
+    System.out.println("Login Dialog Box closed Successfully");
+
+    driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
+
+    WebElement flights=driver.findElement(By.xpath("//*[@id=\\"SW\\"]/div[1]/div[2]/div/div/nav/ul/li[1]/span/a/span[2]"));
+
+    flights.click();
+
+    WebElement roundtrip=driver.findElement(By.xpath("//ul[@class='fswTabs latoRegular darkGreyText ']/li[2]"));
+
+    roundtrip.click();
+
+    System.out.println("Round Trip selected");
+
+    WebElement fromcity=driver.findElement(By.xpath("//input[@id='fromCity']"));
+
+    fromcity.sendKeys("HYD");
+
+    WebElement city=driver.findElement(By.xpath("//*[@id=\\"react-autowhatever-1-section-0-item-0\\"]/div/div[1]/p[1]"));
+    Thread.sleep(5000);
+
+    city.click();
+
+    System.out.println("From city Selected");
+
+    driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+
+    WebElement tocity=driver.findElement(By.xpath("//input[@id='toCity']"));
+
+    tocity.sendKeys("MAA");
+
+    WebElement city2=driver.findElement(By.xpath("//body/div[@id='root']/div[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[1]/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/ul[1]/li[1]/div[1]/div[1]"));
+
+    Thread.sleep(5000);
+    city2.click();
+
+    System.out.println("To city Selected");
+
+    WebElement departureDate=driver.findElement(By.xpath("//div[@aria-label='Sat Oct 28 2023']//p[contains(text(),'28')]"));
+    Thread.sleep(5000);
+    departureDate.click();
+
+    System.out.println("Departure date selected");
+
+    WebElement returnDate=driver.findElement(By.xpath("//div[@aria-label='Mon Nov 06 2023']//p[contains(text(),'6')]"));
+    returnDate.click();
+
+    System.out.println("Return date selected");
+
+    WebElement search=driver.findElement(By.xpath("//*[@id=\\"root\\"]/div/div[2]/div/div/div/div[2]/p/a"));
+
+    search.click();
+
+    System.out.println("Search button clicked and navigated to the next page");
+
+    WebElement popup=driver.findElement(By.xpath("//*[@id=\\"root\\"]/div/div[2]/div[2]/div[2]/div/div/div[3]/button"));
+    popup.click();
+
+    Thread.sleep(3000);
+
+    String title=driver.getTitle();
+
+   System.out.println("The title of the page is : " + title);
+
+   if(title.contains("MakeMyTrip"))
+   {
+	   System.out.println("Search page displayed as expected");
+   }
+
+   else
+   {
+	   System.out.println("Search page displayed as not expected");
+   }
+
+    Thread.sleep(5000);
+
+    driver.close();
+
+}
+
+
+}

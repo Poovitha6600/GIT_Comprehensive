@@ -1,0 +1,145 @@
+package StepDefinition;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.interactions.Actions;
+
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class makemytrip {
+
+WebDriver driver;
+
+
+@Given("User is on the MakeMyTrip Website")
+public void homepage() throws InterruptedException
+{
+
+	System.setProperty("webdriver.chrome.driver", "C:\\\\Intel\\\\Driver\\\\chromedriver-win64\\\\chromedriver-win64\\\\chromedriver.exe");
+
+	ChromeOptions co = new ChromeOptions();
+
+	co.setBinary("C:\\\\Intel\\\\Driver\\\\chrome-win64\\\\chrome-win64\\\\chrome.exe");
+
+    driver = new ChromeDriver();
+
+    driver.get("<https://www.makemytrip.com/>");
+
+    driver.manage().window().maximize();
+
+    Actions action=new Actions(driver);
+
+    action.moveByOffset(50,50).click().build().perform();
+
+    Thread.sleep(2000);
+
+    Actions action1=new Actions(driver);
+
+    action1.moveByOffset(50,50).click().build().perform();
+
+}
+
+@When("User click on Flights")
+public void click_on_flights() throws InterruptedException
+{
+	WebElement flights=driver.findElement(By.xpath("//*[@id=\\"SW\\"]/div[1]/div[2]/div/div/nav/ul/li[1]/span/a/span[2]"));
+	flights.click();
+	Thread.sleep(2000);
+}
+
+
+@And("User select round trip")
+public void round_trip() throws InterruptedException
+{
+	WebElement roundtrip=driver.findElement(By.xpath("//ul[@class='fswTabs latoRegular darkGreyText ']/li[2]"));
+	Thread.sleep(5000);
+	roundtrip.click();
+}
+
+
+@Then("User enter From location as HYD")
+public void FromLocation() throws InterruptedException
+{
+
+	WebElement fromCity=driver.findElement(By.xpath("//input[@id='fromCity']"));
+
+	fromCity.sendKeys("HYD");
+
+	WebElement selectFromCity=driver.findElement(By.xpath("//li[@id=\\"react-autowhatever-1-section-0-item-0\\"]"));
+	Thread.sleep(6000);
+	selectFromCity.click();
+}
+
+
+@And("User enter To location as MAA")
+public void ToLocation()
+{
+
+	WebElement toCity=driver.findElement(By.xpath("//input[@id='toCity']"));
+	toCity.sendKeys("MAA");
+
+	WebElement selectToCity=driver.findElement(By.xpath("//li[@id='react-autowhatever-1-section-0-item-0']"));
+	selectToCity.click();
+}
+
+
+@Then("User select Departure date")
+public void DepartureDate() throws InterruptedException
+{
+
+	WebElement departureDate=driver.findElement(By.xpath("//div[@aria-label='Thu Oct 26 2023']"));
+	departureDate.click();
+
+}
+
+
+@And("User select Return date")
+public void ReturnDate() throws InterruptedException
+{
+
+	WebElement returnDate=driver.findElement(By.xpath("//div[@aria-label='Mon Nov 06 2023']"));
+	returnDate.click();
+	Thread.sleep(2000);
+}
+
+
+@And("click on search")
+public void ClickSearch() throws InterruptedException
+{
+
+	WebElement search=driver.findElement(By.xpath("//a[@class='primaryBtn font24 latoBold widgetSearchBtn ']"));
+	Thread.sleep(5000);
+	search.click();
+}
+
+
+@Then("User should verify the search page displayed as expected")
+public void VerifySearchPage() throws InterruptedException
+{
+	Actions action2=new Actions(driver);
+
+    action2.moveByOffset(50,50).click().build().perform();
+
+	String title=driver.getTitle();
+
+	if(title.contains("MakeMyTrip"))
+	{
+		System.out.println("Search page displayed as expected");
+	}
+
+	else
+	{
+		System.out.println("Search page displayed as not expected");
+	}
+
+	Thread.sleep(5000);
+	driver.close();
+}
+}

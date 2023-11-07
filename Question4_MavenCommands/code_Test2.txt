@@ -1,0 +1,176 @@
+package mavencommands;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+
+import org.apache.poi.ss.usermodel.DataFormatter;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+public class ExcelUtility_Test1 {
+	
+	
+	public static FileInputStream fileLoc;
+	public static XSSFWorkbook xBook;
+	public static XSSFSheet xSheet;
+	public static XSSFRow row;
+	public static XSSFCell cell;
+	
+	
+	// method  to fetch the row count
+	public static int getRowCount(String XLPath, String XSheetName) throws IOException {
+		fileLoc = new FileInputStream(XLPath);
+		xBook = new XSSFWorkbook(fileLoc);
+		xSheet = xBook.getSheet(XSheetName);
+		int rowCount = xSheet.getLastRowNum();
+		return rowCount;
+	}
+	
+	
+	// method to fetch the cell count based on the row number
+	
+	public static int getCellCount(String XLPath, String XSheetName, int rowNum) throws IOException {
+		fileLoc = new FileInputStream(XLPath);
+		xBook = new XSSFWorkbook(fileLoc);
+		xSheet = xBook.getSheet(XSheetName);
+		row = xSheet.getRow(rowNum);
+		int cellCount = row.getLastCellNum();
+		return cellCount;
+	}
+	
+	
+	
+	// method to read the data from the each cell in the String format.
+	
+	public static String getCellData(String XLPath, String XSheetName, int rowNum, int cellNum) throws IOException {
+		
+		fileLoc = new FileInputStream(XLPath);
+		xBook = new XSSFWorkbook(fileLoc);
+		xSheet = xBook.getSheet(XSheetName);
+		row = xSheet.getRow(rowNum);
+		cell = row.getCell(cellNum);
+		
+		DataFormatter format = new DataFormatter();
+		String cellData = format.formatCellValue(cell);
+		
+		fileLoc.close();
+		xBook.close();
+		
+		return cellData;
+		
+	}
+
+}
+
+
+
+package mavencommands;
+
+import java.time.Duration;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.Test;
+
+public class Test2 {
+
+    @Test
+    public void SeleniumJava() throws InterruptedException {
+    	
+        System.setProperty("webdriver.chrome.driver", "C:\\Intel\\Driver\\chromedriver-win64\\chromedriver-win64\\chromedriver.exe");
+
+        ChromeOptions co = new ChromeOptions();
+        co.setBinary("C:\\Intel\\Driver\\chrome-win64\\chrome-win64\\chrome.exe");
+
+        WebDriver driver = new ChromeDriver(co);
+        driver.manage().window().maximize();
+
+        driver.get("https://www.makemytrip.com/");
+
+        Actions action = new Actions(driver);
+        action.moveByOffset(50, 50).click().build().perform();
+        System.out.println("Login Dialog Box closed Successfully");
+
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
+
+        WebElement flights = driver.findElement(By.xpath("//*[@id=\"SW\"]/div[1]/div[2]/div/div/nav/ul/li[1]/span/a/span[2]"));
+        flights.click();
+
+        WebElement roundtrip = driver.findElement(By.xpath("//ul[@class='fswTabs latoRegular darkGreyText ']/li[2]"));
+        roundtrip.click();
+        System.out.println("Round Trip selected");
+
+        WebElement fromcity = driver.findElement(By.xpath("//input[@id='fromCity']"));
+        Thread.sleep(2000);
+        fromcity.click();
+        driver.findElement(By.xpath("//input[@placeholder='From']")).sendKeys("HYD");
+        Thread.sleep(5000);
+        
+        WebElement city = driver.findElement(By.xpath("//div[@id='react-autowhatever-1']//following::ul//li[1]"));
+        city.click();
+        System.out.println("From city Selected");
+
+        
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+
+        WebElement tocity = driver.findElement(By.xpath("//input[@id='toCity']"));
+        tocity.sendKeys("MAA");
+        Thread.sleep(2000);
+
+        
+        WebElement city2 =driver.findElement(By.xpath("//li[@id='react-autowhatever-1-section-0-item-0']"));
+        city2.click();
+        System.out.println("To city Selected");
+
+        
+        WebElement departureDate = driver.findElement(By.xpath("//div[@aria-label='Tue Nov 07 2023']"));
+        departureDate.click();
+        System.out.println("Departure date selected");
+
+        
+        WebElement returnDate = driver.findElement(By.xpath("//div[@aria-label='Wed Nov 15 2023']"));
+        returnDate.click();
+        System.out.println("Return date selected");
+
+        
+        WebElement search = driver.findElement(By.xpath("//a[@class='primaryBtn font24 latoBold widgetSearchBtn ']"));
+        search.click();
+        System.out.println("Search button clicked and navigated to the next page");
+
+        
+        WebElement popup = driver.findElement(By.xpath("//*[@id=\"root\"]/div/div[2]/div[2]/div[2]/div/div/div[3]/button"));
+        popup.click();
+        Thread.sleep(3000);
+
+        
+        String title = driver.getTitle();
+        System.out.println("The title of the page is : " + title);
+
+        
+        
+        if (title.contains("MakeMyTrip")) 
+        {
+        
+        	System.out.println("Search page displayed as expected");
+        
+        }
+        
+        else 
+        {
+        	
+            System.out.println("Search page displayed as not expected");
+            
+        }
+
+        Thread.sleep(5000);
+        driver.close();
+    }
+}
